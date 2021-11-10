@@ -17,7 +17,12 @@ export const calculateCashback = (isCashback, sum, cb) => {
 
 };
 
-export const getHolidaysNotifications = (f, s) => {};
+export const getHolidaysNotifications = (f, s) => {
+  let phrase = f.toLowerCase();
+  if (phrase == 'happy holidays' || phrase == 'marry christmas' || phrase == 'happy birthday'){
+    return `Поздравление ${f} должно быть отправлено ${s} раз`
+  }
+};
 
 export const getHolidayPrizes = (f, s, t) => {
 

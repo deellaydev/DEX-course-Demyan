@@ -3,31 +3,49 @@ export const sum = (f, s) => {
   //TODO: Должны складываться только строки и числа
   // Постарайтесь сложить как можно больше пар и обойти NaN случаи
 
-  let a = f;
-  let b = s;
-  let num_a = typeof a === 'number';
-  let num_b = typeof b === 'number';
-  let str_a = typeof a === 'string';
-  let str_b = typeof b === 'string';
+  // Первое решение, после него нашёл более корткое и не привязанное к порядку
+  // let a = f;
+  // let b = s;
+  // let num_a = typeof a === 'number';
+  // let num_b = typeof b === 'number';
+  // let str_a = typeof a === 'string';
+  // let str_b = typeof b === 'string';
 
-  if (num_a && num_b){
+  // if (num_a && num_b){
+  //   return a+b;
+  // } 
+  // else if(num_a){
+  //   if (str_b && !isNaN(parseInt(b,10))){
+  //     return a+parseInt(b,10);
+  //   }
+  //   else {
+  //     return a;
+  //   }
+  // }
+  // else if(num_b){
+  //   if (str_a && !isNaN(parseInt(a,10))){
+  //     return b+parseInt(a,10);
+  //   }
+  //   else{
+  //     return b;
+  //   }
+  // }
+  // else{
+  //   return 0;
+  // }
+
+  // Второй способ
+  let a = parseInt(f);
+  let b = parseInt(s);
+
+  if (+a && +b){
     return a+b;
-  } 
-  else if(num_a){
-    if (str_b && !isNaN(parseInt(b,10))){
-      return a+parseInt(b,10);
-    }
-    else {
-      return a;
-    }
   }
-  else if(num_b){
-    if (str_a && !isNaN(parseInt(a,10))){
-      return b+parseInt(a,10);
-    }
-    else{
-      return b;
-    }
+  if (+a){
+    return a;
+  }
+  if(+b){
+    return b;
   }
   else{
     return 0;
