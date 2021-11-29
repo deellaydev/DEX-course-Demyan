@@ -1,0 +1,36 @@
+.App {
+  display: flex;
+  flex: 1;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.TestWrapper {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.VehicleTest {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+h1 {
+  margin: 16px 0 0 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+h2 {
+  margin: 16px 0 0 0;
+  padding: 0;
+  font-size: 14px;
+}
