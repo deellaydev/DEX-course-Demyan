@@ -100,7 +100,12 @@ export const Card = (
                                 <button className="info__box-bid" onClick={() => alert("Коэффициент ставки")}>3.82<span>Х</span></button>
                                 <button className="info__box-bid bid-green" onClick={() => alert("Коэффициент ставки")}>3.83<span>П2</span></button>
                             </div>
-                            <button className="info__box-buyticket" onClick={() => alert('Купить билет')}>купить билет</button>
+                            <button className="info__box-buyticket" onClick={() => alert('Купить билет')}><span className="buy">Купить</span> <span className="ticket">билет</span></button>
+                        </div>
+                        <div className="info__box-bids bids__adap">
+                            <button className="info__box-bid bid-red" onClick={() => alert("Коэффициент ставки")}>3.81<span>П1</span></button>
+                            <button className="info__box-bid" onClick={() => alert("Коэффициент ставки")}>3.82<span>Х</span></button>
+                            <button className="info__box-bid bid-green" onClick={() => alert("Коэффициент ставки")}>3.83<span>П2</span></button>
                         </div>
                         <button className="card__broadcast-btn" onClick={() => alert('Смотреть трансляцию')}>смотреть трансляцию матча</button>
                     </div>

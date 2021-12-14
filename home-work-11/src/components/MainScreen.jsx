@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card} from "./Card";
+import Carousel from 'react-elastic-carousel'
 
 export const MainScreen = () => {
     return (
@@ -15,6 +16,19 @@ export const MainScreen = () => {
                     <Card
                         state={'waiting'}
                     />
+                </div>
+                <div className="mainscreen__slider">
+                    <Carousel>
+                        <Card
+                            state={'active'}
+                        />
+                        <Card
+                            state={'ended'}
+                        />
+                        <Card
+                            state={'waiting'}
+                        />
+                    </Carousel>
                 </div>
             </div>
         </div>

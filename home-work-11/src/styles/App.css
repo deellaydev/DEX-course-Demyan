@@ -1,3 +1,6 @@
+@import url(//db.onlinewebfonts.com/c/99f80a7550e09152184491b1d961ca90?family=PF+Din+Text+Comp+Pro);
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -37,7 +40,7 @@ body{
     transition: all .5s;
 }
 .card:hover{
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 .card-active{
     max-width: 780px;
@@ -70,6 +73,7 @@ body{
     line-height: 18px;
     text-transform: uppercase;
     font-weight: 500;
+    font-family: 'Jost', sans-serif;
 }
 .team__box-score{
     font-size: 40px;
@@ -77,6 +81,8 @@ body{
     color: #CC122D;
     padding: 8px 3px;
     background-color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-weight: 700;
 }
 .team__box-timer{
     background: rgba(204, 18, 45, 0.3);
@@ -85,6 +91,8 @@ body{
     width: 100%;
     font-size: 40px;
     line-height: 50px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 700;
 }
 .info__box{
     display: flex;
@@ -97,6 +105,7 @@ body{
     font-size: 24px;
     line-height: 30px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 .info__box-place{
     font-size: 16px;
@@ -141,6 +150,8 @@ body{
     position: relative;
     cursor: pointer;
     transition: all .5s;
+    font-family: 'PF Din Text Comp Pro', sans-serif;
+    font-weight: 500;
 }
 .bid-green{
     background: #27AF11;
@@ -155,6 +166,9 @@ body{
     position: absolute;
     top: 30px;
 }
+.bids__adap{
+    display: none;
+}
 .info__box-buyticket{
     max-width: 180px;
     height: 48px;
@@ -167,6 +181,8 @@ body{
     font-size: 14px;
     line-height: 18px;
     padding: 12px 24px 12px 48px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
 }
 .info__box-buyticket::before{
     content: '';
@@ -190,6 +206,8 @@ body{
     text-transform: uppercase;
     color: #2C2C2C;
     cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
 }
 .card__broadcast-btn::after{
     content: '';
@@ -200,10 +218,206 @@ body{
     top: 7px;
     right: 145px;
 }
+.card-active .team__box-text{
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+}
+.card-active .info__box-date{
+    font-family: 'Jost', sans-serif;
+    font-weight: 700;
+
+}
 .card-waiting .info__box-buyticket{
     width: 56px;
 }
 .card-waiting .info__box-buyticket::before{
     left: 50%;
     transform: translateX(-50%);
+}
+.mainscreen__slider{
+    display: none;
+}
+
+
+
+@media (max-width: 1580px){
+    .card-active{
+        max-width: 730px;
+    }
+    .card__broadcast-btn::after{
+        right: 120px;
+    }
+}
+
+@media (max-width: 1530px){
+    .card{
+        max-width: 310px;
+    }
+    .card-active{
+        max-width: 730px;
+    }
+}
+
+@media (max-width: 1400px){
+    .card{
+        max-width: 310px;
+    }
+    .card-active{
+        max-width: 680px;
+        height: 430px;
+    }
+    .info__box-bids{
+        display: none;
+    }
+    .bids__adap{
+        display: flex;
+        margin: 0 auto;
+        margin-top: 15px;
+    }
+    .card__broadcast-btn::after{
+        right: 100px;
+    }
+}
+
+@media (max-width: 1330px){
+    .mainscreen__inner{
+        display: none;
+    }
+    .mainscreen__slider{
+        display: block;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    .rec-arrow-left{
+        display: none !important;
+    }
+    .rec-arrow-right{
+        display: none !important;
+    }
+    .rec-pagination{
+        display: none !important;
+    }
+    .info__box-buyticket .ticket{
+        display: none;
+    }
+}
+
+@media (max-width: 730px){
+    .team__box-timer{
+        font-size: 30px;
+        max-width: 200px;
+    }
+    .card__broadcast-btn::after{
+        right: 90px;
+    }
+    .info__box-buyticket{
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 700px){
+    .card__broadcast-btn{
+        background: #F0F2F6;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 630px){
+    .team__box-timer{
+        font-size: 20px;
+        max-width: 150px;
+    }
+    .card-active .team__box-text{
+        font-size: 16px;
+    }
+    .team__box img {
+        width: 80px;
+    }
+}
+
+@media (max-width: 580px){
+    .card__broadcast-btn::after{
+        right: 70px;
+    }
+}
+
+@media (max-width: 530px){
+    .card__broadcast-btn::after{
+        right: 60px;
+    }
+}
+
+@media (max-width: 510px){
+    .card__broadcast-btn::after{
+        right: 50px;
+    }
+}
+
+@media (max-width: 480px){
+    .team__box-timer{
+        max-width: 110px;
+        font-size: 16px;
+    }
+    .mainscreen{
+        background-image: url(../img/mobile-bg.jpg);
+    }
+    .card__broadcast-btn{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 450px){
+    .team__box-score{
+        font-size: 24px;
+    }
+    .info__box-date{
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 420px){
+    .team__box-score{
+        font-size: 24px;
+    }
+    .info__box-date{
+        font-size: 16px;
+    }
+    .info__box-buyticket .buy{
+        display: none;
+    }
+    .info__box-buyticket{
+        width: 56px;
+    }
+    .info__box-buyticket::before{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .card-active .team__box-text{
+        font-size: 12px;
+    }
+    .card-active .card__inner{
+        padding: 16px;
+    }
+    .team__box-timer{
+        padding: 4px;
+        max-width: 90px;
+        font-size: 12px;
+    }
+    .team__box img {
+        width: 60px;
+    }
+    .card-active{
+        height: 370px;
+    }
+    .card__broadcast-btn::after{
+        right: 30px;
+    }
+}
+
+@media (max-width: 420px){
+    .card__broadcast-btn::after{
+        right: 5px;
+    }
 }
