@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { lastCommands } from '../index';
+import {IState} from "../index";
 
 export const ConsoleLine = (props: any) => {
-  const dispatch = useDispatch();
 
-  // const getText = () => {
-  //     dispatch({type: 'INPUT', payload: 'asd'})
-  // }
+  const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const nextCommand = useSelector((state: IState) => state.nextCommand)
+  const prevCommand = useSelector((state: IState) => state.prevCommand)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  })
 
   let inputText = '';
 
@@ -33,9 +39,21 @@ export const ConsoleLine = (props: any) => {
           payload: inputText.slice(6).replace(/\s+/g, ''),
         });
       } else {
-          dispatch({
-              type: 'ADD_ERROR'
-          })
+        dispatch({
+          type: 'ADD_ERROR',
+        });
+      }
+    }
+    if (e.keyCode === 38){
+      dispatch({type: 'NEXT_COMMAND'})
+      if (inputRef.current) {
+        inputRef.current.value = nextCommand
+      }
+    }
+    if (e.keyCode === 40){
+      dispatch({type: 'PREV_COMMAND'})
+      if (inputRef.current) {
+        inputRef.current.value = prevCommand
       }
     }
   };
@@ -44,11 +62,14 @@ export const ConsoleLine = (props: any) => {
     return (
       <div className="console__line">
         {props.children}
-        <input onInput={showInput} onKeyDown={onKeyPress} autoFocus={true} />
+        <input ref={inputRef} onInput={showInput} onKeyDown={onKeyPress} autoFocus={true} />
       </div>
     );
-  } else if (props.type === 'message') {
-    return <div className="console__line">{props.children}</div>;
+  } if (props.type === 'message') {
+    return (
+        <div className="console__line">
+            {props.children}
+        </div>);
   } else {
     return (
       <div className="console__line" style={{ color: 'red' }}>
