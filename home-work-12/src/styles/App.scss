@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Consolas, sans-serif;
+  color: green;
+  font-size: 28px;
+}
+.console{
+  min-height: 100vh;
+  background: #000;
+  &__inner{
+    padding: 15px;
+  }
+  &__title{
+    margin-left: 50px;
+  }
+  &__line{
+    display: flex;
+    & input{
+      //width: 100%;
+      background: #000;
+      border: none;
+      margin-left: 15px;
+      resize: none;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+}
