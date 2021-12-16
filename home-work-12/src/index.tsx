@@ -33,10 +33,26 @@ const inputReducer = (state = initialState, action: any) => {
         ...state,
         path: state.path.substring(0, state.path.lastIndexOf('/')) + '>',
       };
+    case 'ADD_ERROR':
+      return {
+          ...state,
+          error: true
+      }
+      case 'REMOVE_ERROR':
+        return {
+            ...state,
+            error: false
+        }
     case 'PRINT_MESSAGE':
+      lastCommands.push('cd');
       return {
         ...state,
         message: action.payload,
+      };
+    case 'REMOVE_MESSAGE':
+      return {
+        ...state,
+        message: '',
       };
     default:
       return state;

@@ -27,20 +27,33 @@ export const ConsoleLine = (props: any) => {
         inputText.slice(3).replace(/\s+/g, '') === '..'
       ) {
         dispatch({ type: 'REMOVE_DIRECTORY' });
-      } else if (
-        inputText.slice(0, 6) === 'print ' 
-      ) {
-          dispatch({ type: 'PRINT_MESSAGE',
-          payload: inputText.slice(6).replace(/\s+/g, '')
+      } else if (inputText.slice(0, 6) === 'print ') {
+        dispatch({
+          type: 'PRINT_MESSAGE',
+          payload: inputText.slice(6).replace(/\s+/g, ''),
         });
+      } else {
+          dispatch({
+              type: 'ADD_ERROR'
+          })
       }
     }
   };
 
-  return (
-    <div className="console__line">
-      {props.children}
-      <input onInput={showInput} onKeyDown={onKeyPress} autoFocus={true} />
-    </div>
-  );
+  if (props.type === 'path') {
+    return (
+      <div className="console__line">
+        {props.children}
+        <input onInput={showInput} onKeyDown={onKeyPress} autoFocus={true} />
+      </div>
+    );
+  } else if (props.type === 'message') {
+    return <div className="console__line">{props.children}</div>;
+  } else {
+    return (
+      <div className="console__line" style={{ color: 'red' }}>
+        {props.children}
+      </div>
+    );
+  }
 };

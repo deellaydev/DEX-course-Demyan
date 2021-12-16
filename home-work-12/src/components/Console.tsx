@@ -6,13 +6,24 @@ import { log } from 'util';
 export const Console = () => {
   const path = useSelector((state: any) => state.path);
   const message = useSelector((state: any) => state.message);
+  const error = useSelector((state: any) => state.error);
   const dispatch = useDispatch();
 
-  const [lines, setLines] = useState([path]);
+  const [lines, setLines] = useState([{ type: 'path', content: path }]);
 
   const onKeyPress = (e: any) => {
     if (e.keyCode === 13) {
-      setLines([...lines, path]);
+      if (message !== '') {
+        setLines([...lines, { type: 'message', content: message }]);
+        dispatch({ type: 'REMOVE_MESSAGE' });
+      } 
+      if (error){
+          setLines([...lines, {type: 'error', content: 'ERROR'}])
+          dispatch({type: 'REMOVE_ERROR'})
+      }
+      else {
+        setLines([...lines, { type: 'path', content: path }]);
+      }
     }
   };
 
@@ -22,7 +33,7 @@ export const Console = () => {
         <h1 className="console__title">Console app</h1>
         <div onKeyDown={onKeyPress} className="lines__inner">
           {lines.map((line) => (
-            <ConsoleLine>{line}</ConsoleLine>
+            <ConsoleLine type={line.type}>{line.content}</ConsoleLine>
           ))}
         </div>
       </div>
