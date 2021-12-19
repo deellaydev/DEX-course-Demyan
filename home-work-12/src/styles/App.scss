@@ -6,26 +6,32 @@
   color: green;
   font-size: 28px;
 }
-.console{
+.console {
   min-height: 100vh;
   background: #000;
-  &__inner{
+
+  &__inner {
     padding: 15px;
   }
-  &__title{
+
+  &__title {
     margin-left: 50px;
   }
-  &__line{
+
+  &__line {
     display: flex;
-    & input{
-      //width: 100%;
-      background: #000;
-      border: none;
-      margin-left: 15px;
-      resize: none;
-      &:focus{
-        outline: none;
-      }
+
+    &:focus {
+      outline: none;
     }
+  }
+
+  & input {
+    //width: 100%;
+    background: #000;
+    border: none;
+    margin-left: 15px;
+    resize: none;
+    outline: none;
   }
 }
