@@ -21,7 +21,14 @@ const initialState: IState = {
 const inputReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case 'CHANGE_DIRECTORY':
-      if (action.payload.split(' ')[1] === '..'){
+      if (action.payload === 'cd') {
+        return {
+          ...state,
+          history: [...state.history, state.path + ' ' + action.payload],
+          path: state.path,
+          lastCommands: [...state.lastCommands, action.payload],
+        }
+      } else if (action.payload.split(' ')[1] === '..'){
         return {
           ...state,
           history: [...state.history, state.path + ' ' + action.payload],
@@ -29,11 +36,20 @@ const inputReducer = (state = initialState, action: any) => {
           lastCommands: [...state.lastCommands, action.payload],
         }
       } else {
-        return {
-          ...state,
-          history: [...state.history, state.path + ' ' + action.payload],
-          path: state.path.slice(0, -1) + '/' + action.payload.slice(3) + '>',
-          lastCommands: [...state.lastCommands, action.payload],
+        if (state.path === ">") {
+          return {
+            ...state,
+            history: [...state.history, state.path + ' ' + action.payload],
+            path: state.path.slice(0, -1) + action.payload.slice(3) + ':>',
+            lastCommands: [...state.lastCommands, action.payload],
+          }
+        } else {
+          return {
+            ...state,
+            history: [...state.history, state.path + ' ' + action.payload],
+            path: state.path.slice(0, -1) + '/' + action.payload.slice(3) + '>',
+            lastCommands: [...state.lastCommands, action.payload],
+          }
         }
       }
     case 'PRINT_MESSAGE':
