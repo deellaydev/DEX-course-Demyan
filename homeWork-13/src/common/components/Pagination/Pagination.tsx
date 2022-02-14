@@ -46,7 +46,6 @@ export const Pagination: FC<PaginationProps> = ({countPages}) => {
   }
 `
   return (
-    <StyledPagination pageCount={countPages} activeClassName="active__page" previousLabel={<img src={leftArrow}/>} nextLabel={<img src={rightArrow}/>}
-    />
+    <StyledPagination pageCount={countPages} activeClassName="active__page" previousLabel={<img src={leftArrow}/>} nextLabel={<img src={rightArrow}/>}/>
   )
 };
