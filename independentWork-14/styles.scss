@@ -1,0 +1,122 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.Block {
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+
+.styledCheckbox:checked ~ div:nth-child(even) {
+  border: 1px solid blue;
+}
+.styledCheckbox:checked ~ div:nth-child(odd) {
+  border: 1px solid red;
+}
+.styledCheckbox:checked ~ div:last-child {
+  border: 3px solid green;
+}
+.styledCheckbox:checked ~ div:nth-child(3) {
+  border: 5px solid black;
+}
+
+form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+
+  & input{
+    border: 5px dotted green;
+  }
+  & input:required{
+      border: 5px solid black;
+  }
+  & input[type='email']{
+    border: 5px solid red;
+  }
+  & input[type='email']:valid{
+    border: 1px solid green;
+  }
+  #auto_number:invalid {
+    border: 5px solid black;
+  }
+  #auto_number:valid {
+    border: 1px solid green;
+  } 
+}
+
+.bg{
+  width: 100%;
+  height: 100vh;
+  
+  background: url(smok.png) 340px 350px no-repeat,
+  url(spl3.png) 670px 190px no-repeat ,
+  url(slp2.png) 500px 220px no-repeat,
+  url(slp4.png) 300px 190px no-repeat,
+  url(cow.png) 200px no-repeat, 
+  url(cow.png) 400px no-repeat, 
+  url(cow.png) 600px no-repeat, 
+  url(fon.jpg) center no-repeat;
+
+  background-size: 50px,
+  150px, 
+  100px,  
+  100px,  
+  200px,  
+  200px,  
+  200px, 
+  cover;
+}
+
+
+label {
+  font-weight: bold;
+  margin-top: 15px;
+}
+input {
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+fieldset {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.transitionContainer  {
+  background: aqua;
+  padding: 10px 15px;
+  & > div {
+    width: 80px;
+    height: 40px;
+    margin-bottom: 3px;
+    background-color: green;
+    &:nth-child(2) {
+      transition-duration: .2s;
+    }
+    &:nth-child(3) {
+      transition-duration: .4s;
+    }
+    &:nth-child(4) {
+      transition-duration: .6s;
+    }
+    &:nth-last-child(2) {
+      transition-duration: .8s;
+    }
+  }
+  input:checked ~ div{
+    transform: translate(600px);
+  }
+}
+
+
+
+
+
+
+

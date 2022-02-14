@@ -1,12 +1,18 @@
 import React from 'react';
-import {UiComponent} from "./common/components/UIComponent";
 import './assests/style/style.css'
-import './assests/style/colors'
+import {ThemeProvider} from "styled-components";
+import {theme} from './assests/style/theme'
+import {Login} from "./modules/auth/Login";
+import {Registration} from "./modules/auth/Registration";
+import {Checkbox} from "./common/components/Checkbox/Checkbox";
 
 export const App = () => {
   return (
-    <div className="App">
-      <UiComponent/>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Login/>
+        <Registration/>
+      </div>
+    </ThemeProvider>
   );
 }
