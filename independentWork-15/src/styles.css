@@ -1,0 +1,13 @@
+.App {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  align-items: center;
+}
+.forms {
+  width: calc(1920px / 2);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 50px;
+}
