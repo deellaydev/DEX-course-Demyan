@@ -15,9 +15,7 @@ export const AuthorizationService = {
       if (!res.ok) {
         throw new Error(res.status.toString())
       }
-
       return res.json()
-
     } catch (error : any) {
       console.error(error)
     }
@@ -41,7 +39,6 @@ export const AuthorizationService = {
         throw new Error(res.status.toString())
       }
       return res.json()
-
     } catch (error : any) {
       console.error(error)
     }

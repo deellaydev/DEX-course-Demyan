@@ -1,4 +1,4 @@
-export const BASED_URL = 'http://dev.trainee.dex-it.ru/'
+const URL = 'http://dev.trainee.dex-it.ru/'
 
 interface IBaseRequestProps {
   url: string;
@@ -12,5 +12,5 @@ interface IBaseRequestProps {
 }
 
 export const baseRequest = async ({ url, ...rest }: IBaseRequestProps) => {
-  return await fetch(BASED_URL + url, { ...rest });
+  return await fetch(URL + url, { ...rest });
 };
