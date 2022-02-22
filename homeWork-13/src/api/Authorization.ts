@@ -1,6 +1,6 @@
 import {baseRequest} from "./baseRequest";
 
-export const AuthService = {
+export const AuthorizationService = {
   login: async (login: string, password: string) => {
     try {
       const res = await baseRequest({

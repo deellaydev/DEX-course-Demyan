@@ -4,7 +4,7 @@ interface IBaseRequestProps {
   url: string;
   method: string
   headers?: {
-    "Content-Type"?: "application/json" | "multipart/form-data";
+    "Content-Type"?: "application/json";
     Accept?: "application/json";
     Authorization?: string;
   },
