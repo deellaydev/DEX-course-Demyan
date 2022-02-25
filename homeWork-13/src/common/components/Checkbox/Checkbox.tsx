@@ -7,17 +7,28 @@ interface CheckboxProps {
 }
 
 export const Checkbox: FC<CheckboxProps> = ({disabled, children, ...attr}) => {
-  const CheckboxWrapper = styled.div`
+
+  return (
+    <CheckboxWrapper>
+      <StyledLabelCheckbox>
+        <StyledCheckbox disabled={disabled} type={'checkbox'}/>
+        <StyledCheckboxShow/>
+        <StyledCheckboxText>{children}</StyledCheckboxText>
+      </StyledLabelCheckbox>
+    </CheckboxWrapper>
+  );
+};
+const CheckboxWrapper = styled.div`
     margin-bottom: 10px;
   `
-  const StyledLabelCheckbox = styled.label`
+const StyledLabelCheckbox = styled.label`
     padding-left: 7px;
     cursor: pointer;
     &:hover > span:nth-child(2) {
       border: 1px solid ${({theme}) => theme.colors.red};
     }
   `
-  const StyledCheckbox = styled.input`
+const StyledCheckbox = styled.input`
     appearance: none;
     &:checked + span {
       background-color: ${({theme}) => theme.colors.red};
@@ -37,11 +48,11 @@ export const Checkbox: FC<CheckboxProps> = ({disabled, children, ...attr}) => {
       color: ${({theme}) => theme.colors.lightestGrey};
     }
   `
-  const StyledCheckboxText = styled.span`
+const StyledCheckboxText = styled.span`
     color: ${({theme}) => theme.colors.grey};
     font-weight: 500;
   `
-  const StyledCheckboxShow = styled.span`
+const StyledCheckboxShow = styled.span`
     position: absolute;
     width: 12px;
     height: 12px;
@@ -50,13 +61,3 @@ export const Checkbox: FC<CheckboxProps> = ({disabled, children, ...attr}) => {
     margin-left: -15px;
     margin-top: 3px;
   `
-  return (
-    <CheckboxWrapper>
-      <StyledLabelCheckbox>
-        <StyledCheckbox disabled={disabled} type={'checkbox'}/>
-        <StyledCheckboxShow/>
-        <StyledCheckboxText>{children}</StyledCheckboxText>
-      </StyledLabelCheckbox>
-    </CheckboxWrapper>
-  );
-};

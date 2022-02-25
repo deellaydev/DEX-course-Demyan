@@ -6,7 +6,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const CancelButton: FC<ButtonProps> = ({children, ...attr}) => {
-  const StyledCancelButton = styled.button`
+
+  return (
+      <StyledCancelButton {...attr}>{children}</StyledCancelButton>
+  );
+};
+const StyledCancelButton = styled.button`
       background-color: ${({theme}) => theme.colors.white};
       border: 1px solid ${({theme}) => theme.colors.lightGrey};
       border-radius: 4px;
@@ -34,8 +39,3 @@ export const CancelButton: FC<ButtonProps> = ({children, ...attr}) => {
         cursor: default;
       }
     `
-
-  return (
-      <StyledCancelButton {...attr}>{children}</StyledCancelButton>
-  );
-};

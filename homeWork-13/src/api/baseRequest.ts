@@ -1,16 +1,14 @@
-const URL = 'http://dev.trainee.dex-it.ru/'
+const BASE_URL = 'http://dev.trainee.dex-it.ru'
 
-interface IBaseRequestProps {
-  url: string;
-  method: string
-  headers?: {
-    "Content-Type"?: "application/json";
-    Accept?: "application/json";
-    Authorization?: string;
-  },
-  body?: FormData | string;
+export const baseRequest = async (url:string, method:string = 'GET', body:string | null = null, headers:HeadersInit = {'Content-Type': 'application/json'}) => {
+  try {
+    const responce = await fetch(`${BASE_URL}${url}`, {method, body, headers})
+    if (!responce.ok) {
+      throw new Error(`Couldn't fetch ${BASE_URL}${url}. Fetch status: ${responce.status}`)
+    }
+    return await responce.json()
+  }
+  catch (e) {
+    throw e
+  }
 }
-
-export const baseRequest = async ({ url, ...rest }: IBaseRequestProps) => {
-  return await fetch(URL + url, { ...rest });
-};

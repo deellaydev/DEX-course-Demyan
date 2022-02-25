@@ -4,11 +4,18 @@ import search from '../../../assests/icons/search.svg'
 
 export const Search: FC = ({...attr}) => {
 
-  const SearchWrapper = styled.div`
+  return (
+    <SearchWrapper>
+      <StyledSearch type={'search'} placeholder={'Search...'}/>
+      <StyledIconSearch src={search}/>
+    </SearchWrapper>
+  );
+};
+const SearchWrapper = styled.div`
     position: relative;
     display: inline;
   `
-  const StyledSearch = styled.input`
+const StyledSearch = styled.input`
     background-color: ${({theme}) => theme.colors.lightestGrey1};
     height: 40px;
     max-width: 365px;
@@ -23,17 +30,10 @@ export const Search: FC = ({...attr}) => {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   `
 
-  const StyledIconSearch = styled.img`
+const StyledIconSearch = styled.img`
     position: absolute;
     right: 18px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
   `
-  return (
-    <SearchWrapper>
-      <StyledSearch type={'search'} placeholder={'Search...'}/>
-      <StyledIconSearch src={search}/>
-    </SearchWrapper>
-  );
-};

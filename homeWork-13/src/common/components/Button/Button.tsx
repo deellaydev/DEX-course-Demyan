@@ -3,16 +3,21 @@ import styled from "styled-components";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
   children: string;
-  addButton?: boolean;
+  width?: string;
 }
 
-export const Button: FC<ButtonProps> = ({children, addButton, ...attr}) => {
-  const StyledButton = styled.button`
+export const Button: FC<ButtonProps> = ({children, width, ...attr}) => {
+
+  return (
+      <StyledButton width={width} {...attr}>{children}</StyledButton>
+  );
+};
+const StyledButton = styled.button<{addButton?: boolean, width?: string}>`
       background-color: ${({theme}) => theme.colors.red};
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      max-width: ${addButton ? '105px' : '365px'};
+      max-width: ${({width}) => width ? width : '365px'};
       width: 100%;
       height: 40px;
       font-size: 15px;
@@ -33,8 +38,3 @@ export const Button: FC<ButtonProps> = ({children, addButton, ...attr}) => {
         color: ${({theme}) => theme.colors.lightestGrey};
       }
     `
-
-  return (
-      <StyledButton {...attr}>{children}</StyledButton>
-  );
-};
