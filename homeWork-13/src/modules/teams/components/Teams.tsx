@@ -8,9 +8,28 @@ import {TeamCardSmall} from "../../../common/components/Card/TeamCardSmall";
 import {TeamsService} from "../../../api/teams/TeamsService";
 import {SelectComponent} from "../../../common/components/Select/SelectComponent";
 
+interface ITeam{
+  name: string;
+  foundationYear: number;
+  division: string;
+  conference: string;
+  imageUrl: string;
+}
+
 export const Teams = () => {
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
+  const [teams, setTeams] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (loading) {
+      const respone = new TeamsService().teamsGet().then((data) => {
+        setTeams(data.data)
+        setLoading(false)
+      })
+    }
+  })
 
     return (
         <TeamsContainer>
@@ -19,6 +38,9 @@ export const Teams = () => {
                 <Button width={'100px'} onClick={() => navigate('/teams/addTeam')}>Add +</Button>
             </TeamsHeader>
             <TeamsCardContainer>
+              {teams.map((el: ITeam) => {
+                return <TeamCardSmall image={el.imageUrl} name={el.name} foundationYear={String(el.foundationYear)}/>
+              })}
             </TeamsCardContainer>
             <TeamsFooter>
                 <Pagination countPages={10}/>
