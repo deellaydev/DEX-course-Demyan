@@ -25,7 +25,7 @@ export const Header: FC<HeaderProps> = ({ ...attr}) => {
 };
 const NavigationWrapper = styled.div`
     width: 100%;
-    box-shadow: 0px 1px 10px rgba(209, 209, 209, 0.5);
+    box-shadow: 0 1px 10px rgba(209, 209, 209, 0.5);
   `
 const NavigationInner = styled.div`
     display: flex;

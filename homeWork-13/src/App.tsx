@@ -1,41 +1,33 @@
 import React from 'react';
 import './assests/style/style.css'
 import {ThemeProvider} from "styled-components";
-import {theme} from './assests/style/theme'
+import {theme} from './assests/theme/theme'
 import { Routes, Route, Navigate } from "react-router-dom";
 import {Layout} from "./pages/Layout";
-import {Login} from "./modules/auth/Login";
-import {Registration} from "./modules/auth/Registration";
+import {Login} from "./modules/auth/Components/Login";
+import {Registration} from "./modules/auth/Components/Registration";
 import {TeamAdd} from "./modules/teams/components/TeamAdd";
 import {Teams} from "./modules/teams/components/Teams";
 import {PlayerAdd} from "./modules/players/components/playerAdd";
 import {Players} from "./modules/players/components/Players";
-
+import {ProtectedRoute} from "./common/components/ProtectedRoute/ProtectedRoute";
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
         <Routes>
-          <Route path='/' element={<RequireAuth><Layout/></RequireAuth>}>
+          <Route path='/' element={<ProtectedRoute><Layout/></ProtectedRoute>}>
             <Route index element={<Teams/>}/>
             <Route path='teams' element={<Teams/>}/>
             <Route path='teams/addTeam' element={<TeamAdd/>}/>
+            <Route path='teams/addTeam/:Teamid'/>
             <Route path='players' element={<Players/>}/>
             <Route path='players/addPlayer' element={<PlayerAdd/>}/>
+            <Route path='teams/:teamId'/>
           </Route>
           <Route path='login' element={<Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
         </Routes>
-      </div>
     </ThemeProvider>
   );
-}
-
-function RequireAuth({children} : {children: JSX.Element}) {
-  let auth = localStorage.getItem('token')
-  if (!auth) {
-    return <Navigate to='login' replace/>
-  }
-  return children
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Search} from "../../../common/components/Input/Search";
 import styled from "styled-components";
 import {Button} from "../../../common/components/Button/Button";
@@ -7,8 +7,13 @@ import {Pagination} from "../../../common/components/Pagination/Pagination";
 import {TeamCardSmall} from "../../../common/components/Card/TeamCardSmall";
 import {TeamsService} from "../../../api/teams/TeamsService";
 import {SelectComponent} from "../../../common/components/Select/SelectComponent";
+import {EmptyPage} from '../../../common/components/Empty/EmptyPage'
+import teamsEmpty from '../../../assests/icons/teams_empty.png'
+import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
+import {getTeamsAction} from "../teamsAsyncAction";
 
 interface ITeam{
+  id: number
   name: string;
   foundationYear: number;
   division: string;
@@ -19,17 +24,26 @@ interface ITeam{
 export const Teams = () => {
 
   const navigate = useNavigate()
-  const [teams, setTeams] = useState([])
-  const [loading, setLoading] = useState(true)
+  const dispatch = useAppDispatch()
+
+  const {teams, loading, error} = useAppSelector((state) => state.teamsReducer)
+
+  const [page, setPage] = useState(1)
+  const [countPages, setCountPages] = useState(1)
+  const [pageSize, setPageSize] = useState(6)
+  const [name, setName] = useState('')
+
+  const handlerPageChanger = ({selected}: {selected: number}) : void => {
+    setPage(selected + 1)
+  }
 
   useEffect(() => {
-    if (loading) {
-      const respone = new TeamsService().teamsGet().then((data) => {
-        setTeams(data.data)
-        setLoading(false)
-      })
-    }
-  })
+    dispatch(getTeamsAction({name: name, page: page, pageSize: pageSize}))
+  }, [name, page, pageSize])
+
+  useEffect(() => {
+    setCountPages(Math.ceil((teams?.count || 1) / pageSize))
+  }, [teams?.count, pageSize])
 
     return (
         <TeamsContainer>
@@ -37,13 +51,16 @@ export const Teams = () => {
                 <Search/>
                 <Button width={'100px'} onClick={() => navigate('/teams/addTeam')}>Add +</Button>
             </TeamsHeader>
-            <TeamsCardContainer>
-              {teams.map((el: ITeam) => {
-                return <TeamCardSmall image={el.imageUrl} name={el.name} foundationYear={String(el.foundationYear)}/>
-              })}
-            </TeamsCardContainer>
+            {loading ? <div>Loading...</div> :
+              <>{teams?.data.length !==0 ? <TeamsCardContainer>
+                {teams?.data.map((el: ITeam) => {
+                  return <TeamCardSmall key={el.id} id={el.id} image={el.imageUrl} name={el.name} foundationYear={String(el.foundationYear)}/>
+                })}
+
+              </TeamsCardContainer> : <EmptyPage text={'Add new teams to continue'} title={'Empty here'} image={teamsEmpty}/>}</>
+            }
             <TeamsFooter>
-                <Pagination countPages={10}/>
+                <Pagination countPages={countPages} currentPage={page-1} onChange={handlerPageChanger}/>
                 <SelectComponent/>
             </TeamsFooter>
         </TeamsContainer>
@@ -53,7 +70,7 @@ const TeamsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 0px 80px;
+  padding: 0 80px;
   justify-content: space-between;
 `
 const TeamsHeader = styled.div`
@@ -62,9 +79,11 @@ const TeamsHeader = styled.div`
   margin-bottom: 10px;
 `
 const TeamsCardContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3,calc((100% - 48px) / 3));
+  grid-gap: 24px;
+  justify-items: stretch;
+  align-items: stretch;
 `
 
 const TeamsFooter = styled.div`

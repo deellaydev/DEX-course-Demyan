@@ -1,14 +1,47 @@
 const BASE_URL = 'http://dev.trainee.dex-it.ru'
 
-export const baseRequest = async (url:string, method:string = 'GET', body:string | null = null, headers:HeadersInit = {'Content-Type': 'application/json'}) => {
+interface IRequestData {
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT'
+  body?: string
+}
+
+export const baseRequest = async (url:string, data: IRequestData, token: string | undefined) => {
   try {
-    const responce = await fetch(`${BASE_URL}${url}`, {method, body, headers})
-    if (!responce.ok) {
-      throw new Error(`Couldn't fetch ${BASE_URL}${url}. Fetch status: ${responce.status}`)
+
+    const tokenForHeaders = token ? {'Authorization': `Bearer ${token}`} : {}
+    const multiPartForHeaders = (typeof data.body === 'string') ? {'Content-Type': 'application/json;charset-utf8'} : {}
+
+    const response = await fetch(url, {
+      ...data,
+      // @ts-ignore
+      headers: {
+        ...tokenForHeaders,
+        ...multiPartForHeaders
+      }
+    });
+    if (response.ok) {
+      if (response.headers.get('Content-Length') === '0') {
+        return true;
+      }
+      const responseType = response.headers.get('Content-Type');
+      let result;
+      if (responseType === 'application/json'){
+        result = await response.text();
+        return result;
+      }
+      result = await response.json();
+      return result;
     }
-    return await responce.json()
   }
-  catch (e) {
-    throw e
+  catch (e: any) {
+    throw new Error(e.message)
   }
 }
+
+export const get = (url: string, token?: string) => baseRequest(`${BASE_URL}${url}`, { method: 'GET' }, token)
+
+export const post = (url: string, body: any, token?:string) => baseRequest(`${BASE_URL}${url}`, {method: 'POST', body}, token)
+
+export const remove = (url: string, token: string) => baseRequest(`${BASE_URL}${url}`, {method: "DELETE"}, token)
+
+export const put = (url: string, body: any, token: string) => baseRequest(`${BASE_URL}${url}`, {method: "PUT", body}, token)

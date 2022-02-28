@@ -1,19 +1,14 @@
-import {baseRequest} from "../baseRequest";
+import {baseRequest, put, post, get, remove} from "../baseRequest";
+import {IGetTeams} from "../dto/Teams";
 
 export class TeamsService {
 
-  async teamsGet() {
-    return await baseRequest('/api/Team/GetTeams', 'GET', null,
-      {'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      })
+  async teamsGet(url: string) {
+    return await get(url, String(localStorage.getItem('token')));
   }
 
   async teamsAdd(data:string) {
-    return await baseRequest('/api/Team/Add', 'POST', data,
-      {'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      })
+    return await post('/api/Team/Add', data , String(localStorage.getItem('token')));
   }
 
 }

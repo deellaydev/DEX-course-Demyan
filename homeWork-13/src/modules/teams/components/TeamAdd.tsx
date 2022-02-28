@@ -9,6 +9,9 @@ import {CancelButton} from "../../../common/components/Button/CancelButton";
 import {Button} from "../../../common/components/Button/Button";
 import {useNavigate} from "react-router-dom";
 import {TeamsService} from "../../../api/teams/TeamsService";
+import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
+import {loginAction} from "../../auth/authAsyncAction";
+import {addTeamAction} from "../teamsAsyncAction";
 
 type AddTeamForm = {
   name: string;
@@ -20,8 +23,11 @@ type AddTeamForm = {
 
 export const TeamAdd = () => {
 
-  const { register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddTeamForm>({mode: "onBlur"})
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddTeamForm>({mode: "onBlur"})
+  const { loading, error } = useAppSelector((state) => state.teamsReducer)
 
   const handleCancelClick = () => {
     navigate(-1)
@@ -36,7 +42,8 @@ export const TeamAdd = () => {
       imageUrl: imageUrl[0].name,
     }
     reset()
-    const request = new TeamsService().teamsAdd(JSON.stringify(Team)).then(() => navigate(-1))
+    dispatch(addTeamAction(Team))
+    navigate(-1)
   }
 
   return (

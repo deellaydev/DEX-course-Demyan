@@ -2,14 +2,14 @@ import React, {FC} from 'react';
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 
-interface TeamCardSmallProps {
-  image: string
-  name: string
-  foundationYear: string
-  id: number
+interface PlayerCardSmallProps {
+  name: string;
+  number: number;
+  team: number;
+  id: number;
 }
 
-export const TeamCardSmall: FC<TeamCardSmallProps> = ({image, name, foundationYear, id, ...attr}) => {
+export const PlayerCardSmall: FC<PlayerCardSmallProps> = ({name, number, team,id, ...attr}) => {
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ export const TeamCardSmall: FC<TeamCardSmallProps> = ({image, name, foundationYe
     <TeamCard onClick={() => navigate(`/teams/${id}`)}>
       <TeamCardFooter>
         <FooterName>{name}</FooterName>
-        <FooterFoundation>Year of foundation: {foundationYear}</FooterFoundation>
+        <FooterFoundation>Year of foundation: {number}</FooterFoundation>
       </TeamCardFooter>
     </TeamCard>
   );

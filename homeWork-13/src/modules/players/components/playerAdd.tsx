@@ -10,6 +10,9 @@ import {Button} from "../../../common/components/Button/Button";
 import {useNavigate} from "react-router-dom";
 import {TeamsService} from "../../../api/teams/TeamsService";
 import {PlayersService} from "../../../api/players/PlayersService";
+import {addTeamAction} from "../../teams/teamsAsyncAction";
+import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
+import {addPlayerAction} from "../playersAsyncAction";
 
 type AddPlayerForm = {
   name: string;
@@ -24,8 +27,11 @@ type AddPlayerForm = {
 
 export const PlayerAdd = () => {
 
-  const { register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({mode: "onBlur"})
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const { register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({mode: "onBlur"})
+  const { loading, error } = useAppSelector((state) => state.teamsReducer)
 
   const handleCancelClick = () => {
     navigate(-1)
@@ -43,7 +49,8 @@ export const PlayerAdd = () => {
        avatarUrl: avatarUrl[0].name
      }
      reset()
-     const request = new PlayersService().playersAdd(JSON.stringify(Player)).then((data) => console.log(data))
+    dispatch(addPlayerAction(Player))
+    // navigate(-1)
   }
 
   return (

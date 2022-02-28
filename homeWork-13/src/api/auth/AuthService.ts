@@ -1,13 +1,13 @@
-import {baseRequest} from "../baseRequest";
+import {baseRequest, post, get, put, remove} from "../baseRequest";
 
 export class AuthService {
 
   async loginService(data:string) {
-    return await baseRequest('/api/Auth/SignIn', 'POST', data)
+    return await post('/api/auth/SignIn', data)
   }
 
   async registrationService(data:string) {
-    return await baseRequest('/api/Auth/SignUp', 'POST', data)
+    return await post('/api/auth/SignUp', data)
   }
 
 }

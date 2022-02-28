@@ -4,14 +4,27 @@ import styled from "styled-components";
 import leftArrow from '../../../assests/icons/left_arrow.svg'
 import rightArrow from '../../../assests/icons/right-arrow.svg'
 
-
-
-export interface PaginationProps {
+interface PaginationProps {
   countPages: number;
+  currentPage: number;
+  onChange: ({selected}: {selected: number}) => void
 }
 
-export const Pagination: FC<PaginationProps> = ({countPages}) => {
-  const StyledPagination = styled(ReactPaginate)`
+
+export const Pagination: FC<PaginationProps> = ({countPages, currentPage, onChange}) => {
+  return (
+    <StyledPagination
+      pageCount={countPages}
+      activeClassName="active__page"
+      previousLabel={<img src={leftArrow}/> }
+      nextLabel={<img src={rightArrow}/>}
+      initialPage={currentPage}
+      onPageChange={onChange}
+    />
+  )
+};
+
+const StyledPagination = styled(ReactPaginate)`
   display: flex;
   & > li {
     margin: 0 5px;
@@ -45,7 +58,3 @@ export const Pagination: FC<PaginationProps> = ({countPages}) => {
     }
   }
 `
-  return (
-    <StyledPagination pageCount={countPages} activeClassName="active__page" previousLabel={<img src={leftArrow}/>} nextLabel={<img src={rightArrow}/>}/>
-  )
-};

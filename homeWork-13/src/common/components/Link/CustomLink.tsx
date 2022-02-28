@@ -1,19 +1,18 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
-import {Link} from "react-router-dom";
 
 interface LinkProps {
-  children?: string
-  link: string
+  children?: string;
+  onClick?: () => void;
 }
 
-export const CustomLink: FC<LinkProps> = ({children, link, ...attr}) => {
+export const CustomLink: FC<LinkProps> = ({children, onClick}) => {
   return (
-    <StyledLink to={link}>{children}</StyledLink>
+    <StyledLink onClick={onClick}>{children}</StyledLink>
   );
 };
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
     padding-left: 5px;
     cursor: pointer;
     color: inherit;

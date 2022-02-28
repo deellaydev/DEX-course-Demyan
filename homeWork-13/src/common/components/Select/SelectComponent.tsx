@@ -49,7 +49,7 @@ const customStyles: StylesConfig = {
   }),
 };
 
-export const SelectComponent: FC = () => {
+export const SelectComponent: FC = (onChange:any) => {
   return (
       <Select
         menuPosition="fixed"
@@ -57,6 +57,7 @@ export const SelectComponent: FC = () => {
         styles={customStyles}
         options={options}
         defaultValue={options[0]}
+        onChange={onChange}
       />
   );
 };
