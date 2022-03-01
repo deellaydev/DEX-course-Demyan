@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import create from "../../../assests/icons/create.svg";
 import deleteimg from "../../../assests/icons/deleteimg.svg";
-import team from "../../../assests/icons/team.png";
+import teamImg from "../../../assests/icons/team.png";
 import styled from "styled-components";
+import {useParams} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
+import {getTeamByIdAction} from "../../../modules/teams/teamsAsyncAction";
 
-export const TeamCard = () => {
+export const TeamCard: FC = () => {
+
+  const dispatch = useAppDispatch()
+
+  const {teamId} = useParams()
+  console.log(teamId)
+
+  const {team, error, loading} = useAppSelector((state) => state.teamsReducer)
+
+  useEffect(() => {
+    dispatch(getTeamByIdAction({id: Number(teamId)}));
+  }, [teamId])
 
   return (
     <CardInner>
@@ -14,7 +28,7 @@ export const TeamCard = () => {
           <BreadCrumbsSeparator>
             /
           </BreadCrumbsSeparator>
-          Denver Nuggets
+          {team?.name}
         </BreadCrumbs>
         <CardHeaderButtons>
           <CardButton src={create}/>
@@ -22,21 +36,21 @@ export const TeamCard = () => {
         </CardHeaderButtons>
       </CardHeader>
       <CardBody>
-        <CardBodyImg src={team}/>
+        <CardBodyImg src={teamImg}/>
         <CardBodyBox>
-          <CardBodyTitle>Denver Nuggets</CardBodyTitle>
+          <CardBodyTitle>{team?.name}</CardBodyTitle>
           <CardBodyInfo>
             <CardBodyCouple>
               <CardCoupleTitle>Year of foundation</CardCoupleTitle>
-              <CardCoupleText>1976</CardCoupleText>
+              <CardCoupleText>{team?.foundationYear}</CardCoupleText>
             </CardBodyCouple>
             <CardBodyCouple>
               <CardCoupleTitle>Division</CardCoupleTitle>
-              <CardCoupleText>Northwestern</CardCoupleText>
+              <CardCoupleText>{team?.division}</CardCoupleText>
             </CardBodyCouple>
             <CardBodyCouple>
               <CardCoupleTitle>Conference</CardCoupleTitle>
-              <CardCoupleText>Western</CardCoupleText>
+              <CardCoupleText>{team?.conference}</CardCoupleText>
             </CardBodyCouple>
           </CardBodyInfo>
         </CardBodyBox>

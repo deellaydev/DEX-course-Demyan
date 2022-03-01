@@ -1,6 +1,6 @@
 import {ITeam, ITeams} from "../../api/dto/Teams";
 import {createSlice} from "@reduxjs/toolkit";
-import {addTeamAction, getTeamsAction} from "./teamsAsyncAction";
+import {addTeamAction, getTeamByIdAction, getTeamsAction} from "./teamsAsyncAction";
 import {AuthSlice} from "../auth/authSlice";
 
 interface ITeamsState {
@@ -46,6 +46,19 @@ export const TeamsSlice = createSlice({
       state.error = false
     });
     builder.addCase(addTeamAction.rejected, (state) => {
+      state.loading = false
+      state.error = true
+    });
+    builder.addCase(getTeamByIdAction.pending, (state) => {
+      state.loading = true
+      state.error = false
+    });
+    builder.addCase(getTeamByIdAction.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = false
+      state.team = action.payload
+    });
+    builder.addCase(getTeamByIdAction.rejected, (state) => {
       state.loading = false
       state.error = true
     })

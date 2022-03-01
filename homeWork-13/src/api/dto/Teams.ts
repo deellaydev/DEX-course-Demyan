@@ -27,3 +27,7 @@ export interface IGetTeams {
   page?:number;
   pageSize?:number;
 }
+
+export interface IGetTeam {
+  id: number | null
+}

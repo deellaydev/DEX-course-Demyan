@@ -11,4 +11,8 @@ export class TeamsService {
     return await post('/api/Team/Add', data , String(localStorage.getItem('token')));
   }
 
+  async getTeamById(url: string) {
+    return await  get(url, String(localStorage.getItem('token')));
+  }
+
 }

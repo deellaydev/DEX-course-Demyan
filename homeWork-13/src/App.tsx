@@ -11,6 +11,7 @@ import {Teams} from "./modules/teams/components/Teams";
 import {PlayerAdd} from "./modules/players/components/playerAdd";
 import {Players} from "./modules/players/components/Players";
 import {ProtectedRoute} from "./common/components/ProtectedRoute/ProtectedRoute";
+import {TeamCard} from "./common/components/Card/TeamCard";
 
 export const App = () => {
   return (
@@ -23,7 +24,7 @@ export const App = () => {
             <Route path='teams/addTeam/:Teamid'/>
             <Route path='players' element={<Players/>}/>
             <Route path='players/addPlayer' element={<PlayerAdd/>}/>
-            <Route path='teams/:teamId'/>
+            <Route path='teams/:teamId' element={<TeamCard/>}/>
           </Route>
           <Route path='login' element={<Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
