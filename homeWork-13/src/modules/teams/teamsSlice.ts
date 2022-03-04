@@ -1,4 +1,4 @@
-import {ITeam, ITeams} from "../../api/dto/Teams";
+import {ITeam, ITeams} from "../../api/dto/teams";
 import {createSlice} from "@reduxjs/toolkit";
 import {addTeamAction, getTeamByIdAction, getTeamsAction} from "./teamsAsyncAction";
 import {AuthSlice} from "../auth/authSlice";

@@ -1,38 +1,50 @@
 import React, {BaseSyntheticEvent, useState} from 'react';
-import styled from "styled-components";
+import {FileInput} from "../../../common/components/Input/FileInput";
 import {Input} from "../../../common/components/Input/Input";
-import {useForm} from "react-hook-form";
 import {CancelButton} from "../../../common/components/Button/CancelButton";
 import {Button} from "../../../common/components/Button/Button";
+import {Notification} from "../../../common/components/Notification/Notification";
+import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
-import {addPlayerAction} from "../playersAsyncAction";
+import {useForm} from "react-hook-form";
 import {imageService} from "../../../api/images/imagesService";
 import {BASE_URL} from "../../../api/baseRequest";
-import {FileInput} from "../../../common/components/Input/FileInput";
-import {Notification} from "../../../common/components/Notification/Notification";
-import {Simulate} from "react-dom/test-utils";
-import play = Simulate.play;
+import {addPlayerAction} from "../playersAsyncAction";
+import {PlayersService} from "../../../api/players/playersService";
+
 
 type AddPlayerForm = {
   name: string;
   position: string;
   team: number;
   birthday: string;
-  height: string;
-  weight: string;
-  number: string
-  avatarUrl: FileList;
+  height: number;
+  weight: number;
+  number: number;
+  avatarUrl: string;
 }
 
-export const PlayerAdd = () => {
+export const PlayerUpdate = () => {
 
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const {register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({mode: "onBlur"})
-  const {loading, error} = useAppSelector((state) => state.teamsReducer)
-  const [photo, setPhoto] = useState('')
+  const {player, loading, error} = useAppSelector((state) => state.playersReducer)
+  const {register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({
+    mode: "onBlur",
+    defaultValues: {
+      name: player?.name,
+      position: player?.position,
+      team: player?.team,
+      birthday: player?.birthday,
+      height: player?.height,
+      weight: player?.weight,
+      number: player?.number,
+      avatarUrl: player?.avatarUrl,
+    }
+  })
+  const [photo, setPhoto] = useState(player?.avatarUrl)
 
   const handleSetPhoto = async (e: BaseSyntheticEvent) => {
     try {
@@ -62,13 +74,10 @@ export const PlayerAdd = () => {
       weight: Number(weight),
       number: Number(number),
       avatarUrl: photo,
+      id: player?.id
     }
-    reset()
-    dispatch(addPlayerAction(Player))
-    navigate(-1)
+    const response = new PlayersService().updatePlayer(JSON.stringify(Player)).then(() => navigate(-1))
   }
-
-  // Селекты не доделал, так как столкнулся с некоторыми трудностями
 
   return (
     <CardInner>

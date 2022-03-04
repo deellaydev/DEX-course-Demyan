@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ISignIn, ISignUp} from "../../api/dto/Auth";
-import {AuthService} from "../../api/auth/AuthService";
+import {ISignIn, ISignUp} from "../../api/dto/auth";
+import {AuthService} from "../../api/auth/authService";
 
 
 export const registrationAction = createAsyncThunk(

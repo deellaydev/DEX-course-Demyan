@@ -1,16 +1,18 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {BaseSyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {Search} from "../../../common/components/Input/Search";
 import styled from "styled-components";
 import {Button} from "../../../common/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import {Pagination} from "../../../common/components/Pagination/Pagination";
 import {TeamCardSmall} from "../../../common/components/Card/TeamCardSmall";
-import {TeamsService} from "../../../api/teams/TeamsService";
+import {TeamsService} from "../../../api/teams/teamsService";
 import {SelectComponent} from "../../../common/components/Select/SelectComponent";
 import {EmptyPage} from '../../../common/components/Empty/EmptyPage'
 import teamsEmpty from '../../../assests/icons/teams_empty.png'
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
 import {getTeamsAction} from "../teamsAsyncAction";
+import {Loading} from "../../../common/components/Loading/Loading";
+import {Notification} from "../../../common/components/Notification/Notification";
 
 interface ITeam{
   id: number
@@ -48,10 +50,10 @@ export const Teams = () => {
     return (
         <TeamsContainer>
             <TeamsHeader>
-                <Search/>
+                <Search value={name} onChange={(e: BaseSyntheticEvent) => setName(e.target.value)}/>
                 <Button width={'100px'} onClick={() => navigate('/teams/addTeam')}>Add +</Button>
             </TeamsHeader>
-            {loading ? <div>Loading...</div> :
+            {loading ? <Loading/> :
               <>{teams?.data.length !==0 ? <TeamsCardContainer>
                 {teams?.data.map((el: ITeam) => {
                   return <TeamCardSmall key={el.id} id={el.id} image={el.imageUrl} name={el.name} foundationYear={String(el.foundationYear)}/>
@@ -63,6 +65,7 @@ export const Teams = () => {
                 <Pagination countPages={countPages} currentPage={page-1} onChange={handlerPageChanger}/>
                 <SelectComponent/>
             </TeamsFooter>
+          {error ? <Notification>Unable to load teams</Notification> : null}
         </TeamsContainer>
     );
 };
@@ -76,13 +79,14 @@ const TeamsContainer = styled.div`
 const TeamsHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `
 const TeamsCardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3,calc((100% - 48px) / 3));
-  grid-gap: 24px;
-  justify-items: stretch;
+  grid-template-columns: repeat(3,calc((100% - 50px) / 3));
+  grid-template-rows: repeat(2, 350px);
+  grid-gap: 10px;
+  justify-items: center;
   align-items: stretch;
 `
 

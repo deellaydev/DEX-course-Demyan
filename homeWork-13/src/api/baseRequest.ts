@@ -1,4 +1,4 @@
-const BASE_URL = 'http://dev.trainee.dex-it.ru'
+export const BASE_URL = 'http://dev.trainee.dex-it.ru'
 
 interface IRequestData {
   method: 'GET' | 'POST' | 'DELETE' | 'PUT'

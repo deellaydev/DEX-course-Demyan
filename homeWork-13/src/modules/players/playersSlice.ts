@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IPlayer, IPlayers} from "../../api/dto/Players";
-import {addPlayerAction, getPlayersAction} from "./playersAsyncAction";
+import {IPlayer, IPlayers} from "../../api/dto/players";
+import {addPlayerAction, getPlayerByIdAction, getPlayersAction} from "./playersAsyncAction";
+import {getTeamByIdAction} from "../teams/teamsAsyncAction";
 
 interface IPlayersState {
   players: IPlayers | null;
@@ -45,6 +46,19 @@ export const PlayersSlice = createSlice({
       state.error = false
     });
     builder.addCase(addPlayerAction.rejected, (state) => {
+      state.loading = false
+      state.error = true
+    })
+    builder.addCase(getPlayerByIdAction.pending, (state) => {
+      state.loading = true
+      state.error = false
+    });
+    builder.addCase(getPlayerByIdAction.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = false
+      state.player = action.payload
+    });
+    builder.addCase(getPlayerByIdAction.rejected, (state) => {
       state.loading = false
       state.error = true
     })

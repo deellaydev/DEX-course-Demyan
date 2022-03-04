@@ -5,15 +5,15 @@ import {Button} from "../../../common/components/Button/Button";
 import {CustomLink} from "../../../common/components/Link/CustomLink";
 import loginImage from '../../../assests/icons/login_img.png'
 import {useForm} from "react-hook-form";
-import {baseRequest} from "../../../api/baseRequest";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthService} from "../../../api/auth/AuthService";
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
 import {loginAction} from "../authAsyncAction";
+import {Notification} from "../../../common/components/Notification/Notification";
 
 type FormData = {
   login: string
   password: string
+  test: string
 }
 
 export const Login: FC = ({...attr}) => {
@@ -23,7 +23,6 @@ export const Login: FC = ({...attr}) => {
 
   const { register, setValue, handleSubmit, formState: {errors}} = useForm<FormData>({mode: "onBlur"})
   const { error, loading } = useAppSelector((state) => state.authReducer)
-  console.log(error, loading)
 
   const onSubmit = async (data: FormData) => {
     await dispatch(loginAction(data))
@@ -49,8 +48,8 @@ export const Login: FC = ({...attr}) => {
       <StyledLoginImageContainer>
         <StyledLoginImage src={loginImage}/>
       </StyledLoginImageContainer>
+      {error ? <Notification>User with the specified username / password was not found.</Notification> : null}
     </StyledLogin>
-
   );
 };
 

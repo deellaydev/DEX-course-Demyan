@@ -12,6 +12,10 @@ import {PlayerAdd} from "./modules/players/components/playerAdd";
 import {Players} from "./modules/players/components/Players";
 import {ProtectedRoute} from "./common/components/ProtectedRoute/ProtectedRoute";
 import {TeamCard} from "./common/components/Card/TeamCard";
+import {PlayerCard} from "./common/components/Card/PlayerCard";
+import {CardHeader} from "./common/components/Card/CardHeader";
+import {TeamUpdate} from "./modules/teams/components/TeamUpdate";
+import {PlayerUpdate} from "./modules/players/components/PlayerUpdate";
 
 export const App = () => {
   return (
@@ -20,14 +24,17 @@ export const App = () => {
           <Route path='/' element={<ProtectedRoute><Layout/></ProtectedRoute>}>
             <Route index element={<Teams/>}/>
             <Route path='teams' element={<Teams/>}/>
-            <Route path='teams/addTeam' element={<TeamAdd/>}/>
-            <Route path='teams/addTeam/:Teamid'/>
-            <Route path='players' element={<Players/>}/>
-            <Route path='players/addPlayer' element={<PlayerAdd/>}/>
             <Route path='teams/:teamId' element={<TeamCard/>}/>
+            <Route path='teams/addTeam' element={<TeamAdd/>}/>
+            <Route path='teams/:teamId/Update' element={<TeamUpdate/>}/>
+            <Route path='players' element={<Players/>}/>
+            <Route path='players/:playerId' element={<PlayerCard/>}/>
+            <Route path='players/addPlayer' element={<PlayerAdd/>}/>
+            <Route path='players/:playerId/Update' element={<PlayerUpdate/>}/>
           </Route>
           <Route path='login' element={<Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
+          <Route path='*'/>
         </Routes>
     </ThemeProvider>
   );

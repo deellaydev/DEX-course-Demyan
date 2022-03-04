@@ -8,10 +8,11 @@ import registrationImage from '../../../assests/icons/registration_img.png'
 import {Checkbox} from "../../../common/components/Checkbox/Checkbox";
 import {useForm} from "react-hook-form";
 import {baseRequest} from "../../../api/baseRequest";
-import {AuthService} from "../../../api/auth/AuthService";
+import {AuthService} from "../../../api/auth/authService";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
 import {registrationAction} from "../authAsyncAction";
+import {Notification} from "../../../common/components/Notification/Notification";
 
 type FormData = {
   userName: string
@@ -28,8 +29,12 @@ export const Registration = () => {
   const { register, setValue, handleSubmit, formState: {errors}} = useForm<FormData>({mode: "onBlur"})
   const { error, loading } = useAppSelector((state) => state.authReducer)
 
-  const onSubmit = ({userName, login, password}: FormData) => {
-    dispatch(registrationAction({userName, login, password}))
+  const onSubmit = ({userName, login, password, confirmPassword}: FormData) => {
+    if (password === confirmPassword) {
+      dispatch(registrationAction({userName, login, password}))
+    } else {
+      alert('Пароли не совпадают')
+    }
   }
 
   useEffect(() => {
@@ -55,6 +60,7 @@ export const Registration = () => {
       <StyledLoginImageContainer>
         <StyledLoginImage src={registrationImage}/>
       </StyledLoginImageContainer>
+      {error ? <Notification>Registration was rejected.</Notification> : null}
     </StyledLogin>
   );
 };

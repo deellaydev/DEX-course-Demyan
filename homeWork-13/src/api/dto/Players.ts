@@ -34,3 +34,7 @@ export interface IGetPlayers {
   page?:number;
   pageSize?:number;
 }
+
+export interface IGetPlayer {
+  id: number | null
+}

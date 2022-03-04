@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IAuthResponse} from "../../api/dto/Auth";
+import {IAuthResponse} from "../../api/dto/auth";
 import {loginAction, registrationAction} from "./authAsyncAction";
 import {useNavigate} from "react-router-dom";
 
