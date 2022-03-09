@@ -1,7 +1,7 @@
 import React, {BaseSyntheticEvent, useState} from 'react';
 import styled from "styled-components";
 import {Input} from "../../../common/components/Input/Input";
-import {useForm} from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
 import {CancelButton} from "../../../common/components/Button/CancelButton";
 import {Button} from "../../../common/components/Button/Button";
 import {useNavigate} from "react-router-dom";
@@ -12,7 +12,14 @@ import {BASE_URL} from "../../../api/baseRequest";
 import {FileInput} from "../../../common/components/Input/FileInput";
 import {Notification} from "../../../common/components/Notification/Notification";
 import {Simulate} from "react-dom/test-utils";
-import play = Simulate.play;
+import {SelectTeam} from "../../../common/components/Select/SelectTeam";
+import {SelectPosition} from "../../../common/components/Select/SelectPosition";
+
+
+interface IOption {
+  value: string;
+  label: string;
+}
 
 type AddPlayerForm = {
   name: string;
@@ -30,8 +37,9 @@ export const PlayerAdd = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const {register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({mode: "onBlur"})
-  const {loading, error} = useAppSelector((state) => state.teamsReducer)
+  const {register, setValue, handleSubmit,control, formState: {errors}, reset} = useForm<AddPlayerForm>({mode: "onBlur"})
+
+  const {error} = useAppSelector((state) => state.teamsReducer)
   const [photo, setPhoto] = useState('')
 
   const handleSetPhoto = async (e: BaseSyntheticEvent) => {
@@ -65,6 +73,7 @@ export const PlayerAdd = () => {
     }
     reset()
     dispatch(addPlayerAction(Player))
+    console.log(Player)
     navigate(-1)
   }
 
@@ -88,8 +97,10 @@ export const PlayerAdd = () => {
           </InputFile>
           <MainForm>
             <Input label={'Name'} id={'Name'} register={register} name={'name'}/>
-            <Input label={'Position'} id={'Position'} register={register} name={'position'}/>
-            <Input label={'Team'} id={'Team'} register={register} name={'team'}/>
+            <Controller control={control} name='position'
+                        render={({field: {onChange, value}}) => <SelectPosition label='Position' id='PositionSelect' onChange={(value : IOption) => onChange(value.value)}/>}/>
+            <Controller control={control} name='team'
+                        render={({field: {onChange, value}}) => <SelectTeam label='Team' id='TeamSelect' onChange={(value : IOption) => onChange(value.value)}/>}/>
             <InputFlex>
               <Input type={'number'} label={'Height (cm)'} id={'height'} register={register} name={'height'}
                      width={'170px'}/>
@@ -143,15 +154,27 @@ const CardBody = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 120px;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    height: 780px;
+    padding: 20px 20px;
+  }
 `
 const CardForm = styled.form`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 const InputFile = styled.div`
   display: flex;
   width: 500px;
+  @media (max-width: 1150px) {
+    width: 350px;
+  }
 `
 const MainForm = styled.div`
   max-width: 350px;

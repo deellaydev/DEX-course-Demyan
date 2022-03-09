@@ -13,7 +13,7 @@ export const CardBody: FC<CardBodyProps> = ({cardType, team, player}) => {
 
   let age
   if (player) {
-    age = (new Date(player.birthday).getFullYear() - new Date().getFullYear())
+    age = (new Date().getFullYear() - new Date(player.birthday).getFullYear())
   }
 
   return (
@@ -81,9 +81,23 @@ const CardBodyWrapper = styled.div<{ cardType: string }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 860px) {
+    flex-direction: column;
+    height: 700px;
+    text-align: center;
+    justify-content: stretch;
+    padding: 15px 20px;
+  }
 `
 const CardBodyImage = styled.img`
   margin-left: 140px;
+  @media (max-width: 1350px) {
+    margin-left: 20px;
+  }
+  @media (max-width: 1070px) {
+    margin-left: 50px;
+    width: 200px;
+  }
 `
 const CardBodyBox = styled.div`
   color: ${({theme}) => theme.colors.white};
@@ -95,16 +109,27 @@ const CardBodyTitle = styled.p`
   line-height: 59px;
   margin-bottom: 40px;
   font-weight: 800;
+  @media (max-width: 1070px) {
+    font-size: 24px;
+  }
 `
 const CardBodyInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  @media (max-width: 860px) {
+    display: block;
+  }
 `
 const CardBodyCouple = styled.div`
   max-width: 215px;
   width: 100%;
   margin-bottom: 50px;
+  @media (max-width: 860px) {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+  }
 `
 const CardCoupleTitle = styled.p`
   font-size: 24px;

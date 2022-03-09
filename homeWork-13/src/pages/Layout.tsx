@@ -27,6 +27,9 @@ const OutletContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${({theme}) => theme.colors.lightestGrey1};
+  @media (max-width: 950px) {
+    width: 100%;
+  }
 `
 const ContentContainer = styled.div`
   display: flex;

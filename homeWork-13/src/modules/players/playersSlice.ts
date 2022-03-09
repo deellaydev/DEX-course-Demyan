@@ -1,14 +1,52 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import {IPlayer, IPlayers} from "../../api/dto/players";
 import {addPlayerAction, getPlayerByIdAction, getPlayersAction} from "./playersAsyncAction";
 import {getTeamByIdAction} from "../teams/teamsAsyncAction";
+import {RootState} from "../../core/redux/store";
 
 interface IPlayersState {
-  players: IPlayers | null;
-  player: IPlayer | null;
+  players: IPlayers | null,
+  player: IPlayer | null,
+  loading: boolean,
+  error: boolean
+}
+
+/* interface IPlayersState {
   loading: boolean;
+  count: number;
+  page: number;
+  size: number;
   error: boolean;
 }
+
+const playersAdapter = createEntityAdapter();
+
+export const playersSelectors = playersAdapter.getSelectors((state:RootState) => state.playersReducer);
+
+const initialState:IPlayersState = playersAdapter.getInitialState({
+  loading: false,
+  count:6,
+  page:1,
+  size:6,
+  error: false,
+});
+
+export const PlayersSlice = createSlice({
+  name: 'players',
+  initialState,
+  reducers: {
+    addPlayerReducer(state,action){
+      playersAdapter.addOne(state,action);
+    },
+    changePlayerReducer(state,action){
+      playersAdapter.updateOne(state,action);
+    },
+    removePlayerReducer: playersAdapter.removeOne
+  },
+  extraReducers: {
+
+  }
+}) */
 
 const initialState: IPlayersState = {
   players: null,

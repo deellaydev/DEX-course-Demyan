@@ -69,6 +69,10 @@ const StyledLoginFormContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  padding: 15px 20px;
+  @media (max-width: 1000px) {
+    max-width: 100%;
+  }
   `
 const LoginTitle = styled.div`
     font-size: 36px;
@@ -98,6 +102,9 @@ const StyledLoginImageContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  @media (max-width: 1000px) {
+    display: none;
+  }
   `
 const StyledLoginImage = styled.img`
       

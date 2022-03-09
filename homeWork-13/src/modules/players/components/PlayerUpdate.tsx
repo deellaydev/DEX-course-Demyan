@@ -7,11 +7,13 @@ import {Notification} from "../../../common/components/Notification/Notification
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {imageService} from "../../../api/images/imagesService";
 import {BASE_URL} from "../../../api/baseRequest";
 import {addPlayerAction} from "../playersAsyncAction";
 import {PlayersService} from "../../../api/players/playersService";
+import {SelectPosition} from "../../../common/components/Select/SelectPosition";
+import {SelectTeam} from "../../../common/components/Select/SelectTeam";
 
 
 type AddPlayerForm = {
@@ -31,7 +33,7 @@ export const PlayerUpdate = () => {
   const dispatch = useAppDispatch()
 
   const {player, loading, error} = useAppSelector((state) => state.playersReducer)
-  const {register, setValue, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({
+  const {register, setValue, control, handleSubmit, formState: {errors}, reset} = useForm<AddPlayerForm>({
     mode: "onBlur",
     defaultValues: {
       name: player?.name,
@@ -97,8 +99,10 @@ export const PlayerUpdate = () => {
           </InputFile>
           <MainForm>
             <Input label={'Name'} id={'Name'} register={register} name={'name'}/>
-            <Input label={'Position'} id={'Position'} register={register} name={'position'}/>
-            <Input label={'Team'} id={'Team'} register={register} name={'team'}/>
+            <Controller control={control} name='position'
+                        render={({field: {onChange, value}}) => <SelectPosition defaultValue={{value: `${player?.position}`, label: `${player?.position}`}} label='Position' id='PositionSelect' onChange={(value : any) => onChange(value.value)}/>}/>
+            <Controller control={control} name='team'
+                        render={({field: {onChange, value}}) => <SelectTeam label='Team' id='TeamSelect' onChange={(value : any) => onChange(value.value)}/>}/>
             <InputFlex>
               <Input type={'number'} label={'Height (cm)'} id={'height'} register={register} name={'height'}
                      width={'170px'}/>
@@ -152,15 +156,27 @@ const CardBody = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 120px;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    height: 780px;
+    padding: 20px 20px;
+  }
 `
 const CardForm = styled.form`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 const InputFile = styled.div`
   display: flex;
   width: 500px;
+  @media (max-width: 1150px) {
+    width: 350px;
+  }
 `
 const MainForm = styled.div`
   max-width: 350px;

@@ -16,6 +16,7 @@ import {PlayerCard} from "./common/components/Card/PlayerCard";
 import {CardHeader} from "./common/components/Card/CardHeader";
 import {TeamUpdate} from "./modules/teams/components/TeamUpdate";
 import {PlayerUpdate} from "./modules/players/components/PlayerUpdate";
+import {SelectTeam} from "./common/components/Select/SelectTeam";
 
 export const App = () => {
   return (
@@ -34,7 +35,6 @@ export const App = () => {
           </Route>
           <Route path='login' element={<Login/>}/>
           <Route path='/registration' element={<Registration/>}/>
-          <Route path='*'/>
         </Routes>
     </ThemeProvider>
   );

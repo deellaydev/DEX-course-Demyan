@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {Button} from "../../../common/components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import {Pagination} from "../../../common/components/Pagination/Pagination";
-import {SelectComponent} from "../../../common/components/Select/SelectComponent";
+import {SelectTeam} from "../../../common/components/Select/SelectTeam";
 import {useAppDispatch, useAppSelector} from "../../../core/hooks/redux";
 import {EmptyPage} from "../../../common/components/Empty/EmptyPage";
 import teamsEmpty from "../../../assests/icons/teams_empty.png";
@@ -13,6 +13,13 @@ import {PlayerCardSmall} from "../../../common/components/Card/PlayerCardSmall";
 import {getPlayersAction} from "../playersAsyncAction";
 import {Loading} from "../../../common/components/Loading/Loading";
 import {Notification} from "../../../common/components/Notification/Notification";
+import {SelectPage} from "../../../common/components/Select/SelectPage";
+import {Controller, useForm} from "react-hook-form";
+
+interface IOption {
+  value: string;
+  label: string;
+}
 
 export const Players = () => {
 
@@ -20,28 +27,43 @@ export const Players = () => {
   const dispatch = useAppDispatch()
 
   const {players, loading, error} = useAppSelector((state) => state.playersReducer)
+  const {register, setValue, handleSubmit,control, formState: {errors}, reset} = useForm<any>({mode: "onBlur"})
 
   const [page, setPage] = useState(1)
   const [countPages, setCountPages] = useState(1)
-  const [pageSize, setPageSize] = useState(6)
+  const [pageSize, setPageSize] = useState({value: '6', label: '6'})
   const [name, setName] = useState('')
+  const [teamLds, setTeamLds] = useState('')
 
   const handlerPageChanger = ({selected}: {selected: number}) : void => {
     setPage(selected + 1)
   }
 
-  useEffect(() => {
-    dispatch(getPlayersAction({name: name, teamsLds: [], page: page, pageSize: pageSize}))
-  }, [name, page, pageSize])
+  const handlerPageSizeChanger = ((option: IOption):void => {
+    setPageSize(option);
+  });
+
+  const handlerTeamLdsChange = (value: IOption[]) : void => {
+    const arr = value.map(el => `&TeamIds=${el.value}`)
+    setTeamLds(arr.join(''))
+  }
 
   useEffect(() => {
-    setCountPages(Math.ceil((players?.count || 1) / pageSize))
+    // @ts-ignore
+    dispatch(getPlayersAction({name: name, teamsLds: teamLds, page: page, pageSize: Number(pageSize?.value)}))
+  }, [name, page, pageSize, teamLds])
+
+  useEffect(() => {
+    setCountPages(Math.ceil((players?.count || 1) / Number(pageSize?.value)))
   }, [players?.count, pageSize])
 
   return (
     <TeamsContainer>
       <TeamsHeader>
-        <Search value={name} onChange={(e: BaseSyntheticEvent) => setName(e.target.value)}/>
+        <Selects>
+          <Search value={name} onChange={(e: BaseSyntheticEvent) => setName(e.target.value)}/>
+          <SelectTeam isMulti={true} id='TeamLdsSelect' onChange={handlerTeamLdsChange}/>
+        </Selects>
         <Button width={'100px'} onClick={() => navigate('/players/addPlayer')}>Add +</Button>
       </TeamsHeader>
         {loading ? <Loading/> :
@@ -53,23 +75,44 @@ export const Players = () => {
         }
       <TeamsFooter>
         <Pagination countPages={countPages} currentPage={page-1} onChange={handlerPageChanger}/>
-        <SelectComponent/>
+        <SelectPage id={'pageSelect'} value={pageSize} onChange={handlerPageSizeChanger}/>
       </TeamsFooter>
       {error ? <Notification>Unable to load players</Notification> : null}
     </TeamsContainer>
   );
 };
+const Selects = styled.div`
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  @media (max-width: 1200px) {
+    width: 50%;
+  }
+  @media (max-width: 700px) {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+`
 const TeamsContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 0 80px;
   justify-content: space-between;
+  @media(max-width: 550px) {
+    padding: 0 10px;
+  }
 `
 const TeamsHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  @media (max-width: 700px) {
+    display: block;
+    width: 100%;
+  }
 `
 const TeamsCardContainer = styled.div`
   display: grid;
@@ -78,9 +121,17 @@ const TeamsCardContainer = styled.div`
   grid-gap: 10px;
   justify-items: center;
   align-items: stretch;
+  @media (max-width: 1170px) {
+    grid-template-columns: repeat(2,calc((100% - 50px) / 2));
+  }
+  @media (max-width: 950px) {
+    grid-template-columns: repeat(1,calc((100% - 50px) / 1));
+    justify-content: center;
+  }
 `
 
 const TeamsFooter = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `

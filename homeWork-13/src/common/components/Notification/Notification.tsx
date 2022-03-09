@@ -11,18 +11,6 @@ export const Notification: FC<NotificationProps> = ({children, ...attr}) => {
   );
 };
 
-const animateNotification = keyframes`
-  0%{
-    transform: translateX(100%);
-  }
-  40% {
-    transform: translateX(-10%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-`
-
 const StyledNotification = styled.div`
   position: absolute;
   height: 40px;
@@ -32,9 +20,8 @@ const StyledNotification = styled.div`
   display: flex;
   align-items: center;
   color: ${({theme}) => theme.colors.white};
-  top: 15px;
+  top: 10px;
   right: 15px;
-  animation: ${animateNotification} 1s ease forwards;
 `
 
 

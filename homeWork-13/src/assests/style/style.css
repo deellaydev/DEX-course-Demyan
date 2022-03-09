@@ -15,7 +15,6 @@
 }
 * {
     box-sizing: border-box;
-    overflow-x: hidden;
 }
 a {
     text-decoration: none;
@@ -25,7 +24,7 @@ a {
 ul,
 ol {
     list-style: none;
-    padding-inline-start: 0px;
+    padding-inline-start: 0;
 }
 body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
     margin: 0;

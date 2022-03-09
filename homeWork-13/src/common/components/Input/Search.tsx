@@ -22,6 +22,11 @@ const SearchWrapper = styled.div<{ width: string }>`
   display: inline;
   max-width: ${({width}) => width ? width : '365px'};
   width: 100%;
+  @media (max-width: 700px) {
+    display: block;
+    margin-bottom: 15px;
+    max-width: 100%;
+  }
 `
 const StyledSearch = styled.input`
   background-color: ${({theme}) => theme.colors.white};
@@ -35,6 +40,9 @@ const StyledSearch = styled.input`
   font-weight: 500;
   padding: 0 25px 0 15px;
   font-size: 14px;
+  @media (max-width: 700px) {
+    max-width: 100%;
+  }
 `
 
 const StyledIconSearch = styled.img`

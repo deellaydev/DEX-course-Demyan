@@ -134,15 +134,27 @@ const CardBody = styled.div`
   justify-content: space-between;
   padding: 20px 115px;
   align-items: center;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    height: 750px;
+    padding: 20px 20px;
+  }
 `
 const CardForm = styled.form`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 const InputFile = styled.div`
   display: flex;
   width: 500px;
+  @media (max-width: 1150px) {
+    width: 350px;
+  }
 `
 const MainForm = styled.div`
   max-width: 350px;
