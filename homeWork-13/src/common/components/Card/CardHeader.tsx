@@ -28,13 +28,15 @@ export const CardHeader: FC<CardHeaderProps> = ({name, to, from}) => {
   const handleDelete = () => {
     if (to === 'teams' && teamId) {
       try {
-        const response = new TeamsService().deleteTeamById(Number(teamId)).then(() => navigate('/teams'))
+        let answer = prompt('Введите "удалить", если хотите удалить карточку');
+        answer?.toLowerCase() === 'удалить' ? new TeamsService().deleteTeamById(Number(teamId)).then(() => navigate('/teams')) : alert('Карточка не удалена')
       } catch (e) {
         console.log(e)
       }
     } else if (to === 'players' && playerId) {
       try {
-        const response = new PlayersService().deletePlayerById(Number(playerId)).then(() => navigate('/players'))
+        let answer = prompt('Введите "удалить", если хотите удалить карточку');
+        answer?.toLowerCase() === 'удалить' ? new PlayersService().deletePlayerById(Number(playerId)).then(() => navigate('/players')) : alert('Карточка не удалена')
       } catch (e) {
         console.log(e)
       }

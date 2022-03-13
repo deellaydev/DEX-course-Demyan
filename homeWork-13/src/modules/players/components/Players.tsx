@@ -15,6 +15,7 @@ import {Loading} from "../../../common/components/Loading/Loading";
 import {Notification} from "../../../common/components/Notification/Notification";
 import {SelectPage} from "../../../common/components/Select/SelectPage";
 import {Controller, useForm} from "react-hook-form";
+import {getTeamsAction} from "../../teams/teamsAsyncAction";
 
 interface IOption {
   value: string;
@@ -27,7 +28,7 @@ export const Players = () => {
   const dispatch = useAppDispatch()
 
   const {players, loading, error} = useAppSelector((state) => state.playersReducer)
-  const {register, setValue, handleSubmit,control, formState: {errors}, reset} = useForm<any>({mode: "onBlur"})
+  const {teams} = useAppSelector((state) => state.teamsReducer)
 
   const [page, setPage] = useState(1)
   const [countPages, setCountPages] = useState(1)
@@ -49,6 +50,7 @@ export const Players = () => {
   }
 
   useEffect(() => {
+    dispatch(getTeamsAction({name: name, page: page, pageSize: Number(pageSize?.value)}))
     // @ts-ignore
     dispatch(getPlayersAction({name: name, teamsLds: teamLds, page: page, pageSize: Number(pageSize?.value)}))
   }, [name, page, pageSize, teamLds])
@@ -69,7 +71,7 @@ export const Players = () => {
         {loading ? <Loading/> :
           <>{players?.data.length !== 0 ? <TeamsCardContainer>
             {players?.data.map((el: IPlayer) => {
-              return <PlayerCardSmall image={el.avatarUrl} name={el.name} number={el.number} team={el.team} id={el.id} key={el.id}/>
+              return <PlayerCardSmall image={el.avatarUrl} name={el.name} number={el.number} team={teams?.data.find(team => team.id === el.team)} id={el.id} key={el.id}/>
             })}
           </TeamsCardContainer> : <EmptyPage text={'Add new players to continue'} title={'Empty here'} image={teamsEmpty}/>}</>
         }

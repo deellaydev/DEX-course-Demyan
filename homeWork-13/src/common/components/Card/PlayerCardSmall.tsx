@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import {ITeam} from "../../../api/dto/teams";
 
 interface PlayerCardSmallProps {
   name: string;
   number: number;
-  team: number;
+  team: ITeam | undefined;
   id: number;
   image: string
 }
@@ -21,7 +22,7 @@ export const PlayerCardSmall: FC<PlayerCardSmallProps> = ({name, number, team,id
       </PlayerCardWrapper>
       <PlayerCardFooter>
         <FooterName>{name} <NameNumber>#{number}</NameNumber></FooterName>
-        <FooterFoundation>{team}</FooterFoundation>
+        <FooterFoundation>{team?.name}</FooterFoundation>
       </PlayerCardFooter>
     </PlayerCard>
   );
@@ -35,6 +36,7 @@ const PlayerCard = styled.div`
   background: linear-gradient(121.57deg, #707070 1.62%, #393939 81.02%);
   border-radius: 4px;
   position: relative;
+  cursor: pointer;
 `
 const PlayerCardFooter = styled.div`
   position: absolute;

@@ -40,7 +40,7 @@ export const CardBody: FC<CardBodyProps> = ({cardType, team, player}) => {
           </CardBodyBox>
         </>
         : <>
-          <CardBodyImage src={player?.avatarUrl}/>
+          <CardBodyImagePlayer src={player?.avatarUrl}/>
           <CardBodyBox>
             <CardBodyTitle>{player?.name} <CardBodyTitleSpan>#{player?.number}</CardBodyTitleSpan></CardBodyTitle>
             <CardBodyInfo>
@@ -91,12 +91,29 @@ const CardBodyWrapper = styled.div<{ cardType: string }>`
 `
 const CardBodyImage = styled.img`
   margin-left: 140px;
+  width: 210px;
+  height: 210px;
   @media (max-width: 1350px) {
     margin-left: 20px;
   }
   @media (max-width: 1070px) {
     margin-left: 50px;
     width: 200px;
+  }
+  @media (max-width: 860px) {
+    margin-left: 0;
+  }
+`
+const CardBodyImagePlayer = styled.img`
+  width: 530px;
+  height: 530px;
+  @media (max-width: 1160px) {
+    width: 300px;
+    height: 300px;
+  }
+  @media (max-width: 860px) {
+    width: 143px;
+    height: 113px;
   }
 `
 const CardBodyBox = styled.div`
